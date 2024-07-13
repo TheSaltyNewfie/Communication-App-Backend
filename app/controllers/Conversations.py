@@ -17,7 +17,9 @@ def createConversation():
         return jsonify({'message': 'You are not authorized to see this'}), 401
 
     Database('app/data.db').execute('insert into Conversations (name) values (?)', name)
+
     result = Database('app/data.db').execute('select * from Conversations where name = ?', name)
+
     return jsonify({'id': result[0][0]}), 200
 
 
@@ -31,6 +33,7 @@ def getConversation(name):
         return jsonify({'message': 'You are not authorized to see this'}), 401
 
     result = Database('app/data.db').execute('select conversation_id from Conversations where name = ?', name)
+    
     return jsonify({'message': result[0][0]})
 
 

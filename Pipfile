@@ -26,6 +26,7 @@ simple-websocket = "==1.0.0"
 websockets = "==12.0"
 werkzeug = "==3.0.3"
 wsproto = "==1.2.0"
+redis = "*"
 
 [dev-packages]
 

@@ -37,8 +37,7 @@ def authenticateUser():
 
     token = generateToken(32)
 
-    Database(
-        'app/data.db').execute('UPDATE Users SET token = ? WHERE username = ?', token, username)
+    Database('app/data.db').execute('UPDATE Users SET token = ? WHERE username = ?', token, username)
 
     if isUser:
         return jsonify({'token': token, 'sender_id': user[0][0]}), 200
@@ -48,8 +47,7 @@ def authenticateUser():
 
 @app.route('/users/<id>', methods=['GET'])
 def getUsers(id):
-    users = Database(
-        'app/data.db').execute('select username, email from Users where user_id = ?', id)
+    users = Database('app/data.db').execute('select username, email from Users where user_id = ?', id)
 
     obj = {
         'username': users[0][0],
@@ -65,8 +63,8 @@ def getUsers(id):
 @app.route('/account', methods=['GET'])
 def getAccount():
     token = request.headers.get('Authorization')
-    user = Database(
-        'app/data.db').execute('select username from Users where token = ?', token)
+    user = Database('app/data.db').execute('select username from Users where token = ?', token)
+
     if len(user) == 0:
         return jsonify({'message': 'invalid token'}), 401
     else:
@@ -81,8 +79,8 @@ def resetPassword():
     password = data.get('password')
 
     try:
-        Database('app/data.db').execute(
-            'update Users set password = ? WHERE username = ? and email = ?', password, username, email)
+        Database('app/data.db').execute('update Users set password = ? WHERE username = ? and email = ?', password, username, email)
+        
         return jsonify({'message': 'successful'})
     except Exception as e:
         return jsonify({'error': e})

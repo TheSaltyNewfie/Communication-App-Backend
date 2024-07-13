@@ -11,8 +11,7 @@ def getConversationMessages(conversation):
     if len(user) == 0:
         return jsonify({'message': 'You are not authorized to see this'}), 401
 
-    result = Database('app/data.db').execute(
-        'SELECT content, message_id, sent_at, sender_id FROM Messages where conversation_id = ?', conversation)
+    result = Database('app/data.db').execute('SELECT content, message_id, sent_at, sender_id FROM Messages where conversation_id = ?', conversation)
 
     obj = []
 
@@ -24,7 +23,7 @@ def getConversationMessages(conversation):
             'message_id': message[1],
             'sent_at': message[2],
             'sender': user[0][0]
-        }
+            }
         )
 
     return jsonify(obj)
@@ -37,8 +36,8 @@ def createMessage():
     content = data.get('content')
     token = request.headers.get('Authorization')
     print(token)
-    user = Database(
-        'app/data.db').execute('select * from Users where token = ?', token)
+    user = Database('app/data.db').execute('select * from Users where token = ?', token)
+
     print(user)
 
     if len(user) == 0:
